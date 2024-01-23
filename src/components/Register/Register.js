@@ -10,6 +10,13 @@ const Register = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  // const [objCheckInput, setObjCheckInput] = useState({
+  //   isValidEmail: true,
+  //   isValidPhone: true,
+  //   isValidPassword: true,
+  //   isValidConfirmPassword: true,
+  // });
+
   const defaultValidInput = {
     isValidEmail: true,
     isValidPhone: true,
@@ -24,25 +31,31 @@ const Register = (props) => {
   };
 
   const isValidInput = () => {
+    setObjCheckInput(defaultValidInput);
     let re = /\S+@\S+\.\S+/;
     if (!email) {
       toast.error("Email is required!");
+      setObjCheckInput({ ...defaultValidInput, isValidEmail: false });
       return false;
     }
     if (!re.test(email)) {
+      setObjCheckInput({ ...defaultValidInput, isValidEmail: false });
       toast.error("Please enter a valid email addres!");
       return false;
     }
     if (!phone) {
+      setObjCheckInput({ ...defaultValidInput, isValidPhone: false });
       toast.error("Phone is required!");
       return false;
     }
     if (!password) {
+      setObjCheckInput({ ...defaultValidInput, isValidPassword: false });
       toast.error("Password is required!");
       return false;
     }
     // eslint-disable-next-line eqeqeq
     if (password != confirmPassword) {
+      setObjCheckInput({ ...defaultValidInput, isValidConfirmPassword: false });
       toast.error("Your password is not the same!");
       return false;
     }
@@ -53,12 +66,25 @@ const Register = (props) => {
     // alert("me");
     // toast.error("Wow so easy !");
     let check = isValidInput();
-    let userData = { email, phone, username, password };
-    console.log("data", userData);
+
+    if (check === true) {
+      axios.post("http://localhost:8080/api/v1/register", {
+        email,
+        phone,
+        username,
+        password,
+      });
+    }
   };
   useEffect(() => {
-    // axios.get("http://localhost:8080/api/test-api").then((data) => {
+    // axios.get("http://localhost:8080/api/v1/test-api").then((data) => {
     //   console.log(data);
+    // // });
+    // axios.post("http://localhost:8080/api/v1/register", {
+    //   email,
+    //   phone,
+    //   username,
+    //   password,
     // });
   }, []);
   return (
