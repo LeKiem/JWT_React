@@ -39,11 +39,18 @@ const Login = (props) => {
       };
       sessionStorage.setItem("account", JSON.stringify(data));
       history.push("/users");
+      window.location.reload();
     }
     if (response && response.data && response.data.EC !== 0) {
       toast.error(response.data.EM);
     }
     // alert("me");
+  };
+
+  const handlePresEnter = (event) => {
+    if (event.charCode === 13 && event.code === "Enter") {
+      handleLogin();
+    }
   };
   return (
     <div className="login-container">
@@ -80,11 +87,12 @@ const Login = (props) => {
                   ? "form-control"
                   : " is-invalid form-control"
               }
+              placeholder="Password"
               value={password}
               onChange={(event) => {
                 setPassword(event.target.value);
               }}
-              placeholder="Password"
+              onKeyPress={(event) => handlePresEnter(event)}
             />
             <button
               className="btn btn-primary"
