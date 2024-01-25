@@ -1,13 +1,10 @@
 import "./App.scss";
 import Nav from "./components/Navigation/Nav";
-import Login from "./components/Login/Login";
-import Register from "./components/Register/Register";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Users from "./components/ManageUsers/Users";
 import { useEffect, useState } from "react";
-import _ from "lodash";
+import AppRouter from "./routers/AppRouter";
 function App() {
   const [account, setAccount] = useState({});
   useEffect(() => {
@@ -19,29 +16,13 @@ function App() {
   return (
     <>
       <Router>
+        <div className="app-header">
+          <Nav />
+        </div>
         <div className="app-container">
+          <AppRouter />
           {/* <Nav></Nav> */}
-          {account && !_.isEmpty(account) && account.isAuthnticated && <Nav />}
-          <Switch>
-            <Route path="/news">News</Route>
-            <Route path="/contact">Contact</Route>
-            <Route path="/about">About</Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/" exact>
-              Home
-            </Route>
-            <Route path="*" exact>
-              404 Not Found
-            </Route>
-          </Switch>
+          {/* {account && !_.isEmpty(account) && account.isAuthnticated && <Nav />} */}
         </div>
         <ToastContainer
           position="top-right"

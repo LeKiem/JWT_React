@@ -1,0 +1,39 @@
+import { Switch, Route } from "react-router-dom";
+import Login from "../components/Login/Login";
+import Register from "../components/Register/Register";
+import Users from "../components/ManageUsers/Users";
+import PrivateRouters from "./PrivateRouters";
+
+const AppRouter = (props) => {
+  const Project = () => {
+    return <span>Project</span>;
+  };
+  return (
+    <>
+      <Switch>
+        {/* <Route path="/project">Project</Route>
+        <Route path="/users">
+          <Users />
+        </Route> */}
+        <PrivateRouters path="/users" component={Users} />
+        <PrivateRouters path="/projects" component={Project} />
+
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+
+        <Route path="/" exact>
+          Home
+        </Route>
+        <Route path="*" exact>
+          404 Not Found
+        </Route>
+      </Switch>
+    </>
+  );
+};
+
+export default AppRouter;
