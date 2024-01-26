@@ -8,11 +8,15 @@ import ModalUser from "./ModalUser";
 const Users = (props) => {
   const [listusers, setListUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(2);
+  const [currentLimit, setCurrentLimit] = useState(4);
   const [totalPages, setTotalPages] = useState(0);
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+  //modal delete
   const [dataModal, setDataModal] = useState({});
   const [isShowModaluser, setIsShowModalUser] = useState(false);
+  const [actionModaluser, setActionModaluser] = useState("CREATE");
+  //modal update
+  const [dataModalUser, setDataModaluser] = useState({});
 
   useEffect(() => {
     fetchUsers();
@@ -49,8 +53,15 @@ const Users = (props) => {
       toast.error(response.data.EM);
     }
   };
-  const onHideModaluser = () => {
+  const onHideModaluser = async () => {
     setIsShowModalUser(false);
+    setDataModaluser({});
+    await fetchUsers();
+  };
+  const handelEditUser = (user) => {
+    setActionModaluser("UPDATE");
+    setDataModaluser(user);
+    setIsShowModalUser(true);
   };
   return (
     <>
@@ -64,7 +75,10 @@ const Users = (props) => {
               <button className="btn btn-success">Refesh</button>
               <button
                 className="btn btn-primary"
-                onClick={() => setIsShowModalUser(true)}
+                onClick={() => {
+                  setIsShowModalUser(true);
+                  setActionModaluser("CREATE");
+                }}
               >
                 Add new
               </button>
@@ -87,14 +101,19 @@ const Users = (props) => {
                     {listusers.map((item, index) => {
                       return (
                         <tr key={`row-${index}`}>
-                          {/* <td>{index + 1}</td> */}
+                          <td>
+                            {(currentPage - 1) * currentLimit + index + 1}
+                          </td>
                           <td>{item.id}</td>
                           <td>{item.email}</td>
                           <td>{item.username}</td>
                           <td>{item.phone}</td>
                           <td>{item.Group ? item.Group.name : ""}</td>
                           <td>
-                            <button className="btn btn-warning mx-3">
+                            <button
+                              className="btn btn-warning mx-3"
+                              onClick={() => handelEditUser(item)}
+                            >
                               Edit
                             </button>
                             <button
@@ -149,9 +168,11 @@ const Users = (props) => {
         dataModal={dataModal}
       />
       <ModalUser
-        title={"Create A New User"}
+        // title={"Create A New User"}
         onHide={onHideModaluser}
         show={isShowModaluser}
+        action={actionModaluser}
+        dataModalUser={dataModalUser}
       />
     </>
   );
