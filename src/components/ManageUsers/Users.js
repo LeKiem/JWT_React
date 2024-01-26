@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { fetchAllUser, deleteUser } from "../../services/userService";
 import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
+import "./Users.scss";
 import ModalDelete from "./ModalDelete";
+import ModalUser from "./ModalUser";
 const Users = (props) => {
   const [listusers, setListUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -137,6 +139,7 @@ const Users = (props) => {
         confrmDeleteUser={confrmDeleteUser}
         dataModal={dataModal}
       />
+      <ModalUser title={"Create A New User"} />
     </>
   );
 };
