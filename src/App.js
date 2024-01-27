@@ -6,13 +6,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AppRouter from "./routers/AppRouter";
 function App() {
-  const [account, setAccount] = useState({});
-  useEffect(() => {
-    let session = sessionStorage.getItem("account");
-    if (session) {
-      setAccount(JSON.parse(session));
-    }
-  }, []);
   return (
     <>
       <Router>
