@@ -55,14 +55,14 @@ const ModalUser = (props) => {
 
   const getGroups = async () => {
     let res = await fetchGroup();
-    if (res && res.data && res.data.EC === 0) {
-      setUserGroup(res.data.DT);
-      if (res.data.DT && res.data.DT.length > 0) {
-        let groups = res.data.DT;
+    if (res && res.EC === 0) {
+      setUserGroup(res.DT);
+      if (res.DT && res.DT.length > 0) {
+        let groups = res.DT;
         setUserData({ ...userData, group: groups[0].id });
       }
     } else {
-      toast.error(res.data.EM);
+      toast.error(res.EM);
     }
   };
   const handleOnChangeInput = (value, name) => {
@@ -104,7 +104,7 @@ const ModalUser = (props) => {
               ...userData,
               groupId: userData["group"],
             });
-      if (res.data && res.data.EC === 0) {
+      if (res && res.EC === 0) {
         props.onHide();
         setUserData({
           ...defaultUserData,
@@ -117,10 +117,10 @@ const ModalUser = (props) => {
           toast.success("Update user success");
         }
       }
-      if (res.data && res.data.EC !== 0) {
-        toast.error(res.data.EM);
+      if (res && res.EC !== 0) {
+        toast.error(res.EM);
         let _valiInputs = _.cloneDeep(validInputsDefault);
-        _valiInputs[res.data.DT] = false;
+        _valiInputs[res.DT] = false;
         setValisInputs(_valiInputs);
         // toast.error(`Error create user...`);
       }
