@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import "./Register.scss";
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { registerNewUser } from "../../services/userService";
@@ -69,9 +69,9 @@ const Register = (props) => {
     let check = isValidInput();
 
     if (check === true) {
-      let response = await registerNewUser(email, phone, username, password);
-      console.log(response);
-      let serverData = response.data;
+      let serverData = await registerNewUser(email, phone, username, password);
+      console.log(serverData);
+      // let serverData = response.data;
       if (+serverData.EC === 0) {
         toast.success(serverData.EM);
         history.push("/login");
