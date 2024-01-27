@@ -63,16 +63,26 @@ const Users = (props) => {
     setDataModaluser(user);
     setIsShowModalUser(true);
   };
+  const handleRefresh = async () => {
+    await fetchUsers();
+  };
   return (
     <>
       <div className="container">
         <div className="managet-users-container">
           <div className="user-header">
-            <div className="title">
-              <h3>Table</h3>
+            <div className="title mt-3">
+              <h3>Manage User</h3>
             </div>
-            <div className="actions">
-              <button className="btn btn-success">Refesh</button>
+            <div className="actions my-4">
+              <button
+                className="btn btn-success refresh"
+                onClick={() => handleRefresh()}
+              >
+                {" "}
+                <i class="fa fa-refresh"></i>
+                Refesh
+              </button>
               <button
                 className="btn btn-primary"
                 onClick={() => {
@@ -80,6 +90,7 @@ const Users = (props) => {
                   setActionModaluser("CREATE");
                 }}
               >
+                <i class="fa fa-plus-circle"></i>
                 Add new
               </button>
             </div>
