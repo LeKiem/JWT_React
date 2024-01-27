@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "./Users.scss";
 import ModalDelete from "./ModalDelete";
 import ModalUser from "./ModalUser";
+import React from "react";
 const Users = (props) => {
   const [listusers, setListUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +18,6 @@ const Users = (props) => {
   const [actionModaluser, setActionModaluser] = useState("CREATE");
   //modal update
   const [dataModalUser, setDataModaluser] = useState({});
-
   useEffect(() => {
     fetchUsers();
   }, [currentPage]);
