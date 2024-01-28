@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { getUserAccount } from "../services/userService";
+// import { useLocation } from "react-router-dom/cjs/react-router-dom";
 const UserContext = React.createContext(null);
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
+  // const locction = useLocation();
+  const userDefault = {
+    isLoading: true,
     isAuthnticated: false,
     token: "",
     account: {},
-  });
+  };
+  const [user, setUser] = useState(userDefault);
 
   // Login updates the user data with a name parameter
   const loginContext = (userData) => {
-    setUser(userData);
+    setUser({ ...userData, isLoading: false });
   };
 
   // Logout updates the user data to default
@@ -31,12 +35,20 @@ const UserProvider = ({ children }) => {
         isAuthnticated: true,
         token: token,
         account: { groupWithRoles, email, username },
+        isLoading: false,
       };
       setUser(data);
+    } else {
+      setUser({ ...userDefault, isLoading: false });
     }
   };
   useEffect(() => {
-    fetchuser();
+    if (
+      window.location.pathname !== "/" ||
+      window.location.pathname !== "/login"
+    ) {
+      fetchuser();
+    }
   }, []);
   return (
     <UserContext.Provider value={{ user, loginContext, logout }}>
