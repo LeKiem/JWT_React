@@ -90,7 +90,7 @@ const Users = (props) => {
                   setActionModaluser("CREATE");
                 }}
               >
-                <i class="fa fa-plus-circle"></i>
+                <i className="fa fa-plus-circle"></i>
                 Add new
               </button>
             </div>
